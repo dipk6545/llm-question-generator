@@ -1,0 +1,23 @@
+{
+  "openai": {
+    "default_model": "gpt-4o-mini",
+    "base_url": null
+  },
+  "gemini": {
+    "default_model": "gemini-3.5-flash-lite",
+    "base_url": "https://generativelanguage.googleapis.com/v1beta/openai/"
+  },
+  "groq": {
+    "default_model2": "openai/gpt-oss-120b",
+    "default_model": "qwen/qwen3.8-27b",
+    "base_url": "https://api.groq.com/openai/v1"
+  },
+  "mistral": {
+    "default_model": "mistral-small-latest",
+    "base_url": "https://api.mistral.ai/v1"
+  },
+  "nvidia": {
+    "default_model": "nvidia/nemotron-3-ultra-550b-a55b",
+    "base_url": "https://integrate.api.nvidia.com/v1"
+  }
+}
