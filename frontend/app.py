@@ -14,8 +14,17 @@ if IMAGE_PATH.exists():
 
 st.markdown("""
     <style>
-        #MainMenu, header, footer, .stDeployButton {
+        #MainMenu, header, footer, .stDeployButton,
+        [data-testid="stStatusWidget"],
+        [data-testid="manage-app-button"],
+        .viewerBadge_container__1QSob,
+        div[class*="viewerBadge"],
+        div[class*="ProfileBadge"],
+        div[class*="streamlit-footer"],
+        div[class*="StatusWidget"] {
             display: none !important;
+            visibility: hidden !important;
+            height: 0 !important;
         }
 
         html, body, [data-testid="stAppViewContainer"] {
