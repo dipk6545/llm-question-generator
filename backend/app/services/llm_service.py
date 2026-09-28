@@ -1,6 +1,6 @@
 import json
 from pathlib import Path
-from openai import OpenAI
+from openai import AsyncOpenAI
 from app.core.config import LLMConfig
 
 class LLM_Service:
@@ -11,7 +11,7 @@ class LLM_Service:
         if not self.api_key:
             raise ValueError(f"API key missing for provider: {self.provider}")
             
-        self.client = OpenAI(
+        self.client = AsyncOpenAI(
             api_key=self.api_key,
             base_url=self.base_url
         )
@@ -23,14 +23,14 @@ class LLM_Service:
         with open(prompt_path, "r", encoding="utf-8") as f:
             return json.load(f)
 
-    def generate_question(self, user_question: str = "") -> str:
+    async def generate_question(self, user_question: str = "") -> str:
         q_gen = self.prompts.get("question_generation", {})
         system_content = q_gen.get("system", "You are an expert technical interviewer.")
         default_user = q_gen.get("user_template", "Generate a single interview question.")
         
         user_content = user_question if user_question else default_user
 
-        response = self.client.chat.completions.create(
+        response = await self.client.chat.completions.create(
             model=self.model,
             messages=[
                 {"role": "system", "content": system_content},
@@ -40,12 +40,13 @@ class LLM_Service:
         return response.choices[0].message.content
 
 
-
-
 if __name__ == "__main__":
-    service = LLM_Service()
-    print(f"Provider: {service.provider}")
-    print(f"Model: {service.model}")
-    print("Testing response...")
-    result = service.generate_question()
-    print("\nResult:\n", result)
+    import asyncio
+    async def test():
+        service = LLM_Service()
+        print(f"Provider: {service.provider}")
+        print(f"Model: {service.model}")
+        print("Testing async response...")
+        result = await service.generate_question()
+        print("\nResult:\n", result)
+    asyncio.run(test())

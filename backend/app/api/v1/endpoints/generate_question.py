@@ -5,7 +5,8 @@ router = APIRouter()
 llm = LLM_Service()
 
 @router.get("/generate")
-def generate_question(user_question: str = ""):
+async def generate_question(user_question: str = ""):
+    question = await llm.generate_question(user_question)
     return {
-        "question" : llm.generate_question(user_question)
+        "question": question
     }
